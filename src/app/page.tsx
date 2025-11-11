@@ -125,8 +125,8 @@ export default function Home() {
         <div className={styles.navContent}>
           <div className={styles.logo}>
             <img 
-              src="/images/Muhammad Farhan Shaukat.jpg" 
-              alt="Muhammad Farhan Shaukat"
+              src="/images/Muhammad Afzaal.jpg" 
+              alt="Muhammad Afzaal"
               style={{
                 width: '30px',
                 height: '30px',
@@ -134,7 +134,7 @@ export default function Home() {
                 marginRight: '8px'
               }}
             />
-            <span className={styles.logoText}>Farhan</span>
+            <span className={styles.logoText}>Afzaal</span>
           </div>
           <button 
             className={styles.mobileMenuButton}
@@ -180,16 +180,16 @@ export default function Home() {
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
             <p className={styles.greeting}>Hello, I'm</p>
-            <h1 className={styles.heroName}>Muhammad Farhan Shaukat</h1>
-            <h2 className={styles.heroTitle}>Full Stack Laravel Developer</h2>
+            <h1 className={styles.heroName}>Muhammad Afzaal</h1>
+            <h2 className={styles.heroTitle}> MERN Stack Developer</h2>
             <p className={styles.heroDescription}>
-              Experienced Laravel developer with over 3.5 years of expertise in building
+              Experienced MERN Stack developer with over 5 years of expertise in building
               scalable, secure, and high-performance web applications. Passionate about clean
               code, API optimization, and delivering efficient backend solutions.
             </p>
             <div className={styles.heroBadges}>
               <span className={styles.badge}>Available for Hire</span>
-              <span className={styles.badge}>3.5+ Years Experience</span>
+              <span className={styles.badge}>5+ Years Experience</span>
             </div>
             <div className={styles.heroButtons}>
               <a href="#projects" className={styles.btnPrimary}>View My Work</a>
@@ -199,8 +199,8 @@ export default function Home() {
           <div className={styles.heroImage}>
             <div className={styles.imagePlaceholder}>
               <img 
-                src="/images/Muhammad Farhan Shaukat.jpg" 
-                alt="Muhammad Farhan Shaukat"
+                src="/images/Muhammad Afzaal.jpg" 
+                alt="Muhammad Afzaal"
                 style={{
                   width: '100%',
                   height: '100%',
@@ -681,14 +681,14 @@ export default function Home() {
                 opportunities to be part of your visions. Feel free to reach out!
               </p>
               <div className={styles.contactMethods}>
-                <a href="mailto:mfarhanshaukatali786@gmail.com" className={styles.contactItem}>
+                <a href="mailto:afzaalhafeez1020@gmail.com" className={styles.contactItem}>
                   <div className={styles.contactIconWrapper}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                       <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
                   </div>
-                  <span>mfarhanshaukatali786@gmail.com</span>
+                  <span>afzaalhafeez1020@gmail.com</span>
                 </a>
                 <a href="#" className={styles.contactItem}>
                   <div className={styles.contactIconWrapper}>
@@ -701,7 +701,7 @@ export default function Home() {
                 </a>
               </div>
               <div className={styles.socialLinks}>
-                <a href="https://github.com/M-Farhan-Shaukat" aria-label="GitHub" className={styles.socialLink}>
+                <a href="https://github.com/M-Afzaal-Shaukat" aria-label="GitHub" className={styles.socialLink}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                   </svg>
@@ -732,8 +732,8 @@ export default function Home() {
             <div className={styles.footerSection}>
               <div className={styles.footerLogo}>
                 <img 
-                  src="/images/Muhammad Farhan Shaukat.jpg" 
-                  alt="Muhammad Farhan Shaukat"
+                  src="/images/Muhammad Afzaal.jpg" 
+                  alt="Muhammad Afzaal"
                   style={{
                     width: '40px',
                     height: '40px',
@@ -741,7 +741,7 @@ export default function Home() {
                     marginRight: '10px'
                   }}
                 />
-                <span>Muhammad Farhan</span>
+                <span>Muhammad Afzaal</span>
               </div>
               <p className={styles.footerTagline}>
                 Full Stack Laravel Developer building scalable web solutions with passion and precision.
@@ -765,7 +765,7 @@ export default function Home() {
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                   </svg>
-                  <a href="mailto:mfarhanshaukatali786@gmail.com">mfarhanshaukatali786@gmail.com</a>
+                  <a href="mailto:afzaalhafeez1020@gmail.com">afzaalhafeez1020@gmail.com</a>
                 </li>
                 <li>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -779,7 +779,7 @@ export default function Home() {
             <div className={styles.footerSection}>
               <h3>Connect</h3>
               <div className={styles.socialLinks}>
-                <a href="https://github.com/M-Farhan-Shaukat" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <a href="https://github.com/M-Afzaal-Shaukat" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                   </svg>
@@ -795,7 +795,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.footerBottom}>
-            <p>&copy; 2025 Muhammad Farhan Shaukat. All rights reserved.</p>
+            <p>&copy; 2025 Muhammad Afzaal. All rights reserved.</p>
           </div>
         </div>
       </footer>

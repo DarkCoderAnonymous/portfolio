@@ -123,7 +123,7 @@ export default function ContactUs() {
     <>
       
       <p>
-        <Link href="mailto:mfarhanshaukatali786@gmail.com"></Link>
+        <Link href="mailto:afzaalhafeez1020@gmail.com"></Link>
       </p>
      
      
