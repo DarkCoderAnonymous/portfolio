@@ -1,14 +1,19 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
-import styles from '../page.module.css';
-import Link from 'next/link';
+"use client";
+import React, { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import styles from "../page.module.css";
+import Link from "next/link";
 
 export default function ContactUs() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Initialize EmailJS on component mount
@@ -31,7 +36,8 @@ export default function ContactUs() {
     if (name === "email") {
       if (!value.trim()) error = "Email is required.";
       else if (!emailRegex.test(value.trim()))
-        error = "Please enter a valid email address (e.g., example@domain.com).";
+        error =
+          "Please enter a valid email address (e.g., example@domain.com).";
     }
     if (name === "subject") {
       if (!value.trim()) error = "Subject cannot be empty.";
@@ -54,7 +60,7 @@ export default function ContactUs() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
+    setError("");
     setSubmitted(false);
 
     // Validate all fields
@@ -78,25 +84,26 @@ export default function ContactUs() {
     }
 
     // EmailJS send
-    emailjs.send(
-      "service_bffriiu",
-      "template_n8ttg79",
-      {
-        name: form.name,
-        email: form.email,
-        reply_to: form.email, // for Reply-To
-        subject: form.subject,
-        message: form.message,
-      },
-      "6_vKg1XbaYvRELYgv"
-    )
+    emailjs
+      .send(
+        "service_47qar1c",
+        "template_4pdcyuy",
+        {
+          name: form.name,
+          email: form.email,
+          reply_to: form.email, // for Reply-To
+          subject: form.subject,
+          message: form.message,
+        },
+        "pRzu3QeZX_DQLZcch"
+      )
       .then(() => {
         setSubmitted(true);
-        setForm({ name: '', email: '', subject: '', message: '' });
+        setForm({ name: "", email: "", subject: "", message: "" });
         setErrors({});
       })
       .catch(() => {
-        setError('Failed to send message. Please try again later.');
+        setError("Failed to send message. Please try again later.");
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -109,127 +116,133 @@ export default function ContactUs() {
     if (submitted || error) {
       timer = setTimeout(() => {
         setSubmitted(false);
-        setError('');
+        setError("");
       }, 3000);
     }
     return () => clearTimeout(timer);
   }, [submitted, error]);
 
   // Theme classes
-  const cardClass = "card bg-dark text-light border-secondary" ;
-  const cardBodyClass = "card-body bg-dark text-light" ;
+  const cardClass = "card bg-dark text-light border-secondary";
+  const cardBodyClass = "card-body bg-dark text-light";
 
   return (
     <>
-      
       <p>
         <Link href="mailto:afzaalhafeez1020@gmail.com"></Link>
       </p>
-     
-     
-    <form className={styles.contactForm} style={{width: '100%'}} onSubmit={handleSubmit} noValidate>
-              <div className={styles.formGroup}>
-              <input
-                type="text"
-                name="name"
-                id="contactName"
-                className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                value={form.name}
-                onChange={handleChange}
-                onBlur={e => validateField(e.target.name, e.target.value)}
-                placeholder="Your Name"
-                required
-                aria-describedby="nameHelp"
-              />
-              {errors.name && (
-                <div id="nameHelp" className="invalid-feedback">
-                  {errors.name}
-                </div>
-              )}
-              </div>
-              <div className={styles.formGroup}>
-              <input
-                type="email"
-                name="email"
-                id="contactEmail"
-                className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                value={form.email}
-                onChange={handleChange}
-                onBlur={e => validateField(e.target.name, e.target.value)}
-                placeholder="Your Email"
-                required
-                aria-describedby="emailHelp"
-              />
-               {errors.email && (
-                <div id="emailHelp" className="invalid-feedback">
-                  {errors.email}
-                </div>
-              )}
-              </div>
-              <div className={styles.formGroup}>
-              <input
-                type="text"
-                name="subject"
-                id="contactSubject"
-                className={`form-control ${errors.subject ? "is-invalid" : ""}`}
-                value={form.subject}
-                onChange={handleChange}
-                onBlur={e => validateField(e.target.name, e.target.value)}
-                placeholder="Subject"
-                required
-                aria-describedby="subjectHelp"
-              />
-              {errors.subject && (
-                <div id="subjectHelp" className="invalid-feedback">
-                  {errors.subject}
-                </div>
-              )}
-              </div>
-              <div className={styles.formGroup}>
-              <textarea
-                name="message"
-                id="contactMessage"
-                className={`form-control ${errors.message ? "is-invalid" : ""}`}
-                value={form.message}
-                onChange={handleChange}
-                onBlur={e => validateField(e.target.name, e.target.value)}
-                placeholder="Write your message here..."
-                rows="5"
-                required
-                aria-describedby="messageHelp"
-              ></textarea>
-               {errors.message && (
-                <div id="messageHelp" className="invalid-feedback">
-                  {errors.message}
-                </div>
-              )}
-              </div>
-              <button
-              type="submit"
-              className={styles.btnPrimary}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  Sending...
-                </>
-              ) : (
-                "Send Message"
-              )}
-            </button>
-            {submitted && (
-              <div className="alert alert-success mt-3" role="alert">
-                Thank you for contacting me! I'll get back to you soon.
-              </div>
-            )}
-            {error && (
-              <div className="alert alert-danger mt-3" role="alert">
-                {error}
-              </div>
-            )}
-            </form>
-              
+
+      <form
+        className={styles.contactForm}
+        style={{ width: "100%" }}
+        onSubmit={handleSubmit}
+        noValidate
+      >
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="name"
+            id="contactName"
+            className={`form-control ${errors.name ? "is-invalid" : ""}`}
+            value={form.name}
+            onChange={handleChange}
+            onBlur={(e) => validateField(e.target.name, e.target.value)}
+            placeholder="Your Name"
+            required
+            aria-describedby="nameHelp"
+          />
+          {errors.name && (
+            <div id="nameHelp" className="invalid-feedback">
+              {errors.name}
+            </div>
+          )}
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="email"
+            name="email"
+            id="contactEmail"
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            value={form.email}
+            onChange={handleChange}
+            onBlur={(e) => validateField(e.target.name, e.target.value)}
+            placeholder="Your Email"
+            required
+            aria-describedby="emailHelp"
+          />
+          {errors.email && (
+            <div id="emailHelp" className="invalid-feedback">
+              {errors.email}
+            </div>
+          )}
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="subject"
+            id="contactSubject"
+            className={`form-control ${errors.subject ? "is-invalid" : ""}`}
+            value={form.subject}
+            onChange={handleChange}
+            onBlur={(e) => validateField(e.target.name, e.target.value)}
+            placeholder="Subject"
+            required
+            aria-describedby="subjectHelp"
+          />
+          {errors.subject && (
+            <div id="subjectHelp" className="invalid-feedback">
+              {errors.subject}
+            </div>
+          )}
+        </div>
+        <div className={styles.formGroup}>
+          <textarea
+            name="message"
+            id="contactMessage"
+            className={`form-control ${errors.message ? "is-invalid" : ""}`}
+            value={form.message}
+            onChange={handleChange}
+            onBlur={(e) => validateField(e.target.name, e.target.value)}
+            placeholder="Write your message here..."
+            rows="5"
+            required
+            aria-describedby="messageHelp"
+          ></textarea>
+          {errors.message && (
+            <div id="messageHelp" className="invalid-feedback">
+              {errors.message}
+            </div>
+          )}
+        </div>
+        <button
+          type="submit"
+          className={styles.btnPrimary}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>
+              <span
+                className="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Sending...
+            </>
+          ) : (
+            "Send Message"
+          )}
+        </button>
+        {submitted && (
+          <div className="alert alert-success mt-3" role="alert">
+            Thank you for contacting me! I'll get back to you soon.
+          </div>
+        )}
+        {error && (
+          <div className="alert alert-danger mt-3" role="alert">
+            {error}
+          </div>
+        )}
+      </form>
     </>
   );
-} 
+}
