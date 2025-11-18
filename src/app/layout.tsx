@@ -13,8 +13,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Muhammad Farhan Shaukat | Full Stack Laravel Developer",
-  description: "Experienced Full Stack Laravel developer (3.5+ years) building scalable, secure, and high-performance web applications with clean code and optimized APIs.",
+  title: "Muhammad Afzaal — MERN Stack Developer & Frontend Specialist",
+  description:
+    "Frontend-focused MERN developer building fast, accessible, and maintainable web apps with React, Next.js, TypeScript and Node.js.",
+  icons: {
+    icon: "/images/Muhammad Afzaal.jpg",
+    shortcut: "/images/Muhammad Afzaal.jpg",
+    apple: "/images/Muhammad Afzaal.jpg",
+  },
+  openGraph: {
+    title: "Muhammad Afzaal — MERN Stack Developer & Frontend Specialist",
+    description:
+      "Frontend-focused MERN developer building fast, accessible, and maintainable web apps with React, Next.js, TypeScript and Node.js.",
+    url: "https://your-domain.com/",
+    siteName: "Muhammad Afzaal Portfolio",
+    images: [
+      {
+        url: "/images/Muhammad Afzaal.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Muhammad Afzaal",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Muhammad Afzaal — MERN Stack Developer & Frontend Specialist",
+    description:
+      "Frontend-focused MERN developer building fast, accessible, and maintainable web apps with React, Next.js, TypeScript and Node.js.",
+    images: ["/images/Muhammad Afzaal.jpg"],
+  },
 };
 
 export default function RootLayout({

@@ -1,39 +1,48 @@
+"use client";
 
-'use client';
-
-import { useEffect, useState } from 'react';
-import styles from './page.module.css';
-import ContactForm from './contact/ContactUs';
+import { useEffect, useState } from "react";
+import styles from "./page.module.css";
+import ContactForm from "./contact/ContactUs";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-      
+
       // Update active section based on scroll position
-      const sections = ['home', 'about', 'skills', 'projects', 'testimonials', 'contact'];
+      const sections = [
+        "home",
+        "about",
+        "skills",
+        "projects",
+        "testimonials",
+        "contact",
+      ];
       const scrollPosition = window.scrollY + 200;
-      
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(section);
             break;
           }
         }
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu on scroll
@@ -43,77 +52,84 @@ export default function Home() {
         setIsMobileMenuOpen(false);
       }
     };
-    
+
     if (isMobileMenuOpen) {
-      window.addEventListener('scroll', handleScrollClose, { passive: true });
-      return () => window.removeEventListener('scroll', handleScrollClose);
+      window.addEventListener("scroll", handleScrollClose, { passive: true });
+      return () => window.removeEventListener("scroll", handleScrollClose);
     }
   }, [isMobileMenuOpen]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
   // Prevent body scroll when popup is open
   useEffect(() => {
     if (showPopup) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [showPopup]);
 
   // Function to get domain URL from project name
   const getProjectDomain = (projectName: string): string => {
     const domainMap: { [key: string]: string } = {
-      'Marklab Doctors Portal': 'marklab-doctors-portal.com',
-      'Legal Documents': 'legal-documents.com',
+      "Marklab Doctors Portal": "marklab-doctors-portal.com",
+      "Legal Documents": "legal-documents.com",
     };
-    return domainMap[projectName] || `${projectName.toLowerCase().replace(/\s+/g, '-')}.com`;
+    return (
+      domainMap[projectName] ||
+      `${projectName.toLowerCase().replace(/\s+/g, "-")}.com`
+    );
   };
 
   // Handle live demo button click
-  const handleLiveDemoClick = (e: React.MouseEvent<HTMLAnchorElement>, projectName: string, href: string) => {
-    if (href === '#' || !href || href.trim() === '') {
+  const handleLiveDemoClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    projectName: string,
+    href: string
+  ) => {
+    if (href === "#" || !href || href.trim() === "") {
       e.preventDefault();
-      
+
       // Show popup
       setShowPopup(true);
-      
+
       // Make API call to project domain (but ignore response)
       // This will appear in the network tab
       const domain = getProjectDomain(projectName);
       const url = `https://${domain}`;
-      
+
       // Use XMLHttpRequest to ensure it appears in network tab
       // This method is guaranteed to show in the network tab
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
+      xhr.open("GET", url, true);
       xhr.send();
       // Don't handle response - we just need the request to appear in network tab
-      
+
       // Also use fetch as a backup
       fetch(url, {
-        method: 'GET',
-        cache: 'no-cache',
+        method: "GET",
+        cache: "no-cache",
       })
-      .then(() => {
-        // Response received but we don't use it
-      })
-      .catch(() => {
-        // Ignore errors - the request will still appear in network tab
-      });
+        .then(() => {
+          // Response received but we don't use it
+        })
+        .catch(() => {
+          // Ignore errors - the request will still appear in network tab
+        });
     }
     // If href is valid, let the link work normally
   };
@@ -239,13 +255,14 @@ export default function Home() {
           <div className={styles.heroText}>
             <p className={styles.greeting}>Hello, I'm</p>
             <h1 className={styles.heroName}>Muhammad Afzaal</h1>
-            <h2 className={styles.heroTitle}>MERN Stack Developer — Frontend Specialist</h2>
+            <h2 className={styles.heroTitle}>
+              MERN Stack Developer — Frontend Specialist
+            </h2>
             <p className={styles.heroDescription}>
               Frontend-focused MERN developer with 5+ years building fast,
               accessible, and maintainable web interfaces using React and
-              Next.js. I combine strong UI/UX sensibilities with solid
-              backend experience (Node/Express/MongoDB) to deliver end-to-end
-              products.
+              Next.js. I combine strong UI/UX sensibilities with solid backend
+              experience (Node/Express/MongoDB) to deliver end-to-end products.
             </p>
             <div className={styles.heroBadges}>
               <span className={styles.badge}>Available for Hire</span>
