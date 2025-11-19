@@ -388,7 +388,6 @@ export default function Home() {
                 <li>MongoDB / Mongoose</li>
                 <li>REST & GraphQL APIs</li>
                 <li>Authentication & Authorization</li>
-                <li>MySQL (when required)</li>
               </ul>
             </div>
             <div className={styles.skillCard}>
@@ -564,9 +563,10 @@ export default function Home() {
                 </p>
                 <div className={styles.projectTags}>
                   <span>React.js</span>
+                  <span>Next.js</span>
                   <span>Node.js</span>
-                  <span>MySQL</span>
-                  <span>Bootstrap</span>
+                  <span>Redux</span>
+                  <span>Ui libraries</span>
                 </div>
               </div>
             </div>
@@ -612,7 +612,6 @@ export default function Home() {
                   <span>React.js</span>
                   <span>Node.js</span>
                   <span>Bootstrap</span>
-                  <span>MySQL</span>
                 </div>
               </div>
             </div>
@@ -981,22 +980,7 @@ export default function Home() {
               </div>
               <div className={styles.socialLinks}>
                 <a
-                  href="https://github.com/M-Afzaal-Shaukat"
-                  aria-label="GitHub"
-                  className={styles.socialLink}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                  </svg>
-                  <span>GitHub</span>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/m-farhan-shaukat-9aa172219/"
+                  href="https://www.linkedin.com/in/afzaal-hafeez-148299209/"
                   aria-label="LinkedIn"
                   className={styles.socialLink}
                 >
@@ -1103,22 +1087,7 @@ export default function Home() {
               <h3>Connect</h3>
               <div className={styles.socialLinks}>
                 <a
-                  href="https://github.com/M-Afzaal-Shaukat"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                  </svg>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/m-farhan-shaukat-9aa172219/"
+                  href="https://www.linkedin.com/in/afzaal-hafeez-148299209/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
