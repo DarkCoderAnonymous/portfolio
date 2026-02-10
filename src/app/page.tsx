@@ -1,38 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import styles from "./page.module.css";
 import ContactForm from "./contact/ContactUs";
+import Background3D from "@/components/Background3D";
+import CustomCursor from "@/components/CustomCursor";
+import SmoothScroll from "@/components/SmoothScroll";
+import LoadingAnimation from "@/components/LoadingAnimation";
+import AnimatedHero from "@/components/AnimatedHero";
+import ProjectCard3D from "@/components/ProjectCard3D";
+import SkillCard3D from "@/components/SkillCard3D";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Update active section based on scroll position
-      const sections = [
-        "home",
-        "about",
-        "skills",
-        "projects",
-        "testimonials",
-        "contact",
-      ];
+      const sections = ["home", "about", "skills", "projects", "testimonials", "contact"];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section);
             break;
           }
@@ -41,25 +41,10 @@ export default function Home() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on scroll
-  useEffect(() => {
-    const handleScrollClose = () => {
-      if (isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    if (isMobileMenuOpen) {
-      window.addEventListener("scroll", handleScrollClose, { passive: true });
-      return () => window.removeEventListener("scroll", handleScrollClose);
-    }
-  }, [isMobileMenuOpen]);
-
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -71,7 +56,6 @@ export default function Home() {
     };
   }, [isMobileMenuOpen]);
 
-  // Prevent body scroll when popup is open
   useEffect(() => {
     if (showPopup) {
       document.body.style.overflow = "hidden";
@@ -83,1087 +67,434 @@ export default function Home() {
     };
   }, [showPopup]);
 
-  // Function to get domain URL from project name
-  const getProjectDomain = (projectName: string): string => {
-    const domainMap: { [key: string]: string } = {
-      "Marklab Doctors Portal": "marklab-doctors-portal.com",
-      "Legal Documents": "legal-documents.com",
-    };
-    return (
-      domainMap[projectName] ||
-      `${projectName.toLowerCase().replace(/\s+/g, "-")}.com`
-    );
-  };
+  const projects = [
+    {
+      title: "ConvertPK",
+      description: "ConvertPK.com is a fast and user-friendly online file conversion platform built with Next.js, allowing users to seamlessly convert PDFs, ZIPs, Base64, images, and more — all directly from their browser with a smooth and responsive experience.",
+      image: "/images/convertpk.png",
+      tags: ["Next.js", "Node.js", "TypeScript"],
+      link: "https://convertpk.com",
+      badge: "New",
+    },
+    {
+      title: "Krub.ai",
+      description: "Krub enables users to join or build wholesale buying communities, connect with other businesses, share requirements and leverage collective volume to negotiate stronger bargains.",
+      image: "/images/krub.png",
+      tags: ["Next.js", "Bootstrap", "Node.js", "Mongoose"],
+      link: "https://krub.ai",
+      badge: "Featured",
+    },
+    {
+      title: "Inventory Management System",
+      description: "Developed backend business logic for inventory and accounting, including Chart of Accounts, PDF templating, and Stripe payments. Implemented Chinese translation and collaborated closely with frontend for seamless API communication.",
+      image: "/images/inventory.png",
+      tags: ["React.js", "Next.js", "Node.js", "Redux"],
+      link: "http://inventory.seebiz.com",
+      badge: "Featured",
+    },
+    {
+      title: "Books Management System",
+      description: "Built backend logic for accounting reports (Chart of Accounts, PDFs, Stripe), integrated with Inventory Management for consistent reporting, added Chinese translation.",
+      image: "/images/books.png",
+      tags: ["React.js", "Node.js", "Bootstrap"],
+      link: "https://books.seebiz.com",
+    },
+    {
+      title: "Expense Management System",
+      description: "Implemented backend logic including Chart of Accounts and Stripe integration. Built Trip and Expense modules with admin approvals and role-based access control.",
+      image: "/images/expense.png",
+      tags: ["React.js", "Node.js", "Bootstrap", "MySQL"],
+      link: "https://expense.seebiz.com",
+    },
+    {
+      title: "Admin Panel",
+      description: "Built a custom admin panel to manage users and organizations, enabling large-scale updates across accounts. Replaced legacy Chart of Accounts with a flexible, scalable structure.",
+      image: "/images/admin.png",
+      tags: ["Node.js", "MySQL", "React.js", "Bootstrap"],
+      link: "https://admin-inventory.seebiz.com/",
+    },
+  ];
 
-  // Handle live demo button click
-  const handleLiveDemoClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    projectName: string,
-    href: string
-  ) => {
-    if (href === "#" || !href || href.trim() === "") {
-      e.preventDefault();
+  const skills = [
+    {
+      icon: "💻",
+      title: "Frontend",
+      skills: ["HTML", "CSS (module / Tailwind)", "JavaScript / TypeScript", "React.js", "Next.js", "Responsive & Accessible UI"],
+    },
+    {
+      icon: "⚙️",
+      title: "Backend",
+      skills: ["Node.js / Express", "MongoDB / Mongoose", "REST & GraphQL APIs", "Authentication & Authorization"],
+    },
+    {
+      icon: "🎨",
+      title: "Skills & Tools",
+      skills: ["Git / GitHub", "Postman", "Docker (basic)", "CI / CD basics"],
+    },
+    {
+      icon: "📱",
+      title: "Services",
+      skills: ["API Optimization", "Performance Tuning", "Security", "Multilingual (i18n)"],
+    },
+  ];
 
-      // Show popup
-      setShowPopup(true);
-
-      // Make API call to project domain (but ignore response)
-      // This will appear in the network tab
-      const domain = getProjectDomain(projectName);
-      const url = `https://${domain}`;
-
-      // Use XMLHttpRequest to ensure it appears in network tab
-      // This method is guaranteed to show in the network tab
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", url, true);
-      xhr.send();
-      // Don't handle response - we just need the request to appear in network tab
-
-      // Also use fetch as a backup
-      fetch(url, {
-        method: "GET",
-        cache: "no-cache",
-      })
-        .then(() => {
-          // Response received but we don't use it
-        })
-        .catch(() => {
-          // Ignore errors - the request will still appear in network tab
-        });
-    }
-    // If href is valid, let the link work normally
-  };
+  if (isLoading) {
+    return <LoadingAnimation onComplete={() => setIsLoading(false)} />;
+  }
 
   return (
-    <div className={styles.container}>
-      {/* Navigation */}
-      <nav className={`${styles.nav} ${isScrolled ? styles.navScrolled : ""}`}>
-        <div className={styles.navContent}>
-          <div className={styles.logo}>
-            <img
-              src="/images/Muhammad Afzaal.jpg"
-              alt="Muhammad Afzaal"
-              style={{
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                marginRight: "8px",
-              }}
-            />
-            <span className={styles.logoText}>Afzaal</span>
-          </div>
-          <button
-            className={styles.mobileMenuButton}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              const newState = !isMobileMenuOpen;
-              console.log("Menu button clicked, new state:", newState);
-              setIsMobileMenuOpen(newState);
-            }}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-            }}
-            aria-label="Toggle menu"
-            aria-expanded={isMobileMenuOpen}
-            type="button"
-          >
-            <span
-              className={`${styles.hamburger} ${
-                isMobileMenuOpen ? styles.hamburgerOpen : ""
-              }`}
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </button>
-          {isMobileMenuOpen && (
-            <div
-              className={styles.mobileMenuOverlay}
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-          )}
-          <ul
-            className={`${styles.navLinks} ${
-              isMobileMenuOpen ? styles.navLinksOpen : ""
-            }`}
-          >
-            <li>
-              <a
-                href="#home"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={activeSection === "home" ? styles.active : ""}
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#about"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={activeSection === "about" ? styles.active : ""}
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="#skills"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={activeSection === "skills" ? styles.active : ""}
-              >
-                Skills
-              </a>
-            </li>
-            <li>
-              <a
-                href="#projects"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={activeSection === "projects" ? styles.active : ""}
-              >
-                Projects
-              </a>
-            </li>
-            <li>
-              <a
-                href="#testimonials"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={
-                  activeSection === "testimonials" ? styles.active : ""
-                }
-              >
-                Testimonials
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={activeSection === "contact" ? styles.active : ""}
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <SmoothScroll>
+      <div className={styles.container}>
+        <Background3D />
+        <CustomCursor />
 
-      {/* Hero Section */}
-      <section id="home" className={styles.hero}>
-        <div className={styles.heroContent}>
-          <div className={styles.heroText}>
-            <p className={styles.greeting}>Hello, I'm</p>
-            <h1 className={styles.heroName}>Muhammad Afzaal</h1>
-            <h2 className={styles.heroTitle}>
-              MERN Stack Developer — Frontend Specialist
-            </h2>
-            <p className={styles.heroDescription}>
-              Frontend-focused MERN developer with 5+ years building fast,
-              accessible, and maintainable web interfaces using React and
-              Next.js. I combine strong UI/UX sensibilities with solid backend
-              experience (Node/Express/MongoDB) to deliver end-to-end products.
-            </p>
-            <div className={styles.heroBadges}>
-              <span className={styles.badge}>Available for Hire</span>
-              <span className={styles.badge}>5+ Years Experience</span>
-            </div>
-            <div className={styles.heroButtons}>
-              <a href="#projects" className={styles.btnPrimary}>
-                View My Work
-              </a>
-              <a href="#contact" className={styles.btnSecondary}>
-                Get In Touch
-              </a>
-            </div>
-          </div>
-          <div className={styles.heroImage}>
-            <div className={styles.imagePlaceholder}>
+        {/* Navigation */}
+        <motion.nav
+          className={`${styles.nav} ${isScrolled ? styles.navScrolled : ""}`}
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className={styles.navContent}>
+            <div className={styles.logo}>
               <img
                 src="/images/Muhammad Afzaal.jpg"
                 alt="Muhammad Afzaal"
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
+                  width: "30px",
+                  height: "30px",
                   borderRadius: "50%",
+                  marginRight: "8px",
                 }}
               />
+              <span className={styles.logoText}>Afzaal</span>
             </div>
+            <button
+              className={styles.mobileMenuButton}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <span className={`${styles.hamburger} ${isMobileMenuOpen ? styles.hamburgerOpen : ""}`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+            {isMobileMenuOpen && (
+              <div className={styles.mobileMenuOverlay} onClick={() => setIsMobileMenuOpen(false)} />
+            )}
+            <ul className={`${styles.navLinks} ${isMobileMenuOpen ? styles.navLinksOpen : ""}`}>
+              {["home", "about", "skills", "projects", "testimonials", "contact"].map((section) => (
+                <li key={section}>
+                  <a
+                    href={`#${section}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={activeSection === section ? styles.active : ""}
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <ThemeToggle />
           </div>
-        </div>
-        <div className={styles.scrollIndicator}>
-          <div className={styles.mouse}>
-            <div className={styles.wheel}></div>
-          </div>
-        </div>
-      </section>
+        </motion.nav>
 
-      {/* About Section */}
-      <section id="about" className={styles.section}>
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionNumber}>01</span>
-            <h2 className={styles.sectionTitle}>About Me</h2>
-            <p className={styles.sectionSubtitle}>
-              Full-Stack developer focused on scalable, high-performance, and
-              secure web apps
-            </p>
-          </div>
-          <div className={styles.aboutContent}>
-            <div className={styles.aboutText}>
-              <div className={styles.aboutIntro}>
+        {/* Hero Section */}
+        <section id="home">
+          <AnimatedHero />
+        </section>
+
+        {/* About Section */}
+        <section id="about" className={styles.section}>
+          <div className={styles.sectionContent}>
+            <motion.div
+              className={styles.sectionHeader}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className={styles.sectionNumber}>01</span>
+              <h2 className={styles.sectionTitle}>About Me</h2>
+              <p className={styles.sectionSubtitle}>
+                Full-Stack developer focused on scalable, high-performance, and secure web apps
+              </p>
+            </motion.div>
+            <motion.div
+              className={styles.aboutContent}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className={styles.aboutText}>
                 <p className={styles.leadText}>
-                  Experienced MERN Stack developer with 5+ years of hands-on
-                  experience, specializing in modern frontend development using
-                  React.js and Next.js. I build fast, accessible, and
-                  user-focused applications using TypeScript, Redux Toolkit,
-                  React Query and modern CSS (Tailwind / CSS modules). I focus
-                  on clean architecture, reusable components, and shipping
-                  delightful user experiences while supporting robust backend
-                  APIs.
+                  Experienced MERN Stack developer with 5+ years of hands-on experience, specializing in modern
+                  frontend development using React.js and Next.js. I build fast, accessible, and user-focused
+                  applications using TypeScript, Redux Toolkit, React Query and modern CSS (Tailwind / CSS modules).
                 </p>
                 <p>
-                  Passionate about solving complex problems and delivering real
-                  business value, I focus on efficient APIs, robust backend
-                  systems, and clear domain logic.
+                  Passionate about solving complex problems and delivering real business value, I focus on efficient
+                  APIs, robust backend systems, and clear domain logic.
                 </p>
                 <p>
-                  I continuously enhance my skills in React.js and Next.js to
-                  stay aligned with modern frontend trends and deliver seamless,
-                  end-to-end product experiences.
+                  I continuously enhance my skills in React.js and Next.js to stay aligned with modern frontend trends
+                  and deliver seamless, end-to-end product experiences.
                 </p>
               </div>
               <div className={styles.stats}>
-                <div className={styles.stat}>
-                  <h3>10+</h3>
-                  <p>Projects Completed</p>
-                </div>
-                <div className={styles.stat}>
-                  <h3>10+</h3>
-                  <p>Happy Clients</p>
-                </div>
-                <div className={styles.stat}>
-                  <h3>5+</h3>
-                  <p>Years Experience</p>
-                </div>
+                {[
+                  { value: "10+", label: "Projects Completed" },
+                  { value: "10+", label: "Happy Clients" },
+                  { value: "5+", label: "Years Experience" },
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    className={styles.stat}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05, y: -5 }}
+                  >
+                    <h3>{stat.value}</h3>
+                    <p>{stat.label}</p>
+                  </motion.div>
+                ))}
               </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" className={`${styles.section} ${styles.sectionDark}`}>
+          <div className={styles.sectionContent}>
+            <motion.div
+              className={styles.sectionHeader}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className={styles.sectionNumber}>02</span>
+              <h2 className={styles.sectionTitle}>Skills & Technologies</h2>
+              <p className={styles.sectionSubtitle}>A comprehensive toolkit for modern web development</p>
+            </motion.div>
+            <div className={styles.skillsGrid}>
+              {skills.map((skill, index) => (
+                <SkillCard3D key={skill.title} skill={skill} index={index} />
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Skills Section */}
-      <section
-        id="skills"
-        className={`${styles.section} ${styles.sectionDark}`}
-      >
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionNumber}>02</span>
-            <h2 className={styles.sectionTitle}>Skills & Technologies</h2>
-            <p className={styles.sectionSubtitle}>
-              A comprehensive toolkit for modern web development
-            </p>
-          </div>
-          <div className={styles.skillsGrid}>
-            <div className={styles.skillCard}>
-              <div className={styles.skillIcon}>💻</div>
-              <h3>Frontend</h3>
-              <ul>
-                <li>HTML</li>
-                <li>CSS (module / Tailwind)</li>
-                <li>JavaScript / TypeScript</li>
-                <li>React.js</li>
-                <li>Next.js</li>
-                <li>Tailwind CSS</li>
-                <li>Responsive & Accessible UI</li>
-              </ul>
-            </div>
-            <div className={styles.skillCard}>
-              <div className={styles.skillIcon}>⚙️</div>
-              <h3>Backend</h3>
-              <ul>
-                <li>Node.js / Express</li>
-                <li>MongoDB / Mongoose</li>
-                <li>REST & GraphQL APIs</li>
-                <li>Authentication & Authorization</li>
-              </ul>
-            </div>
-            <div className={styles.skillCard}>
-              <div className={styles.skillIcon}>🎨</div>
-              <h3>Skills & Tools</h3>
-              <ul>
-                <li>Git / GitHub</li>
-                <li>Postman</li>
-                <li>Docker (basic)</li>
-                <li>CI / CD basics</li>
-              </ul>
-            </div>
-            <div className={styles.skillCard}>
-              <div className={styles.skillIcon}>📱</div>
-              <h3>Services</h3>
-              <ul>
-                <li>API Optimization</li>
-                <li>Performance Tuning</li>
-                <li>Security</li>
-                <li>Authentication/Authorization</li>
-                <li>Multilingual (i18n)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className={styles.section}>
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionNumber}>03</span>
-            <h2 className={styles.sectionTitle}>Featured Projects</h2>
-            <p className={styles.sectionSubtitle}>
-              A selection of projects showcasing my expertise and
-              problem-solving approach
-            </p>
-          </div>
-          <div className={styles.projectsGrid}>
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/convertpk.png"
-                  alt="ConvertPK Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectBadge}>New</div>
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="https://convertpk.com"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>ConvertPK</h3>
-                <p>
-                  ConvertPK.com is a fast and user-friendly online file
-                  conversion platform built with Next.js, allowing users to
-                  seamlessly convert PDFs, ZIPs, Base64, images, and more — all
-                  directly from their browser with a smooth and responsive
-                  experience.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>Node.js</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/krub.png"
-                  alt="Krub.ai Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectBadge}>Featured</div>
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="https://krub.ai"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Krub.ai</h3>
-                <p>
-                  Krub enables users to join or build wholesale buying
-                  communities, connect with other businesses, share requirements
-                  and leverage collective volume to negotiate stronger bargains.
-                  It’s designed to support businesses that need access to
-                  wholesale pricing by creating collaborative purchasing groups
-                  rather than going solo.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>Next.js</span>
-                  <span>Bootstrap</span>
-                  <span>Node.js</span>
-                  <span>Mongoose</span>
-                </div>
-              </div>
-            </div>
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/inventory.png"
-                  alt="Inventory Management System Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectBadge}>Featured</div>
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="http://inventory.seebiz.com"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Inventory Management System</h3>
-                <p>
-                  Developed backend business logic for inventory and accounting,
-                  including Chart of Accounts, PDF templating, and Stripe
-                  payments. Implemented Chinese translation and collaborated
-                  closely with frontend for seamless API communication.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>React.js</span>
-                  <span>Next.js</span>
-                  <span>Node.js</span>
-                  <span>Redux</span>
-                  <span>Ui libraries</span>
-                </div>
-              </div>
-            </div>
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/books.png"
-                  alt="Books Management System Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="https://books.seebiz.com"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Books Management System</h3>
-                <p>
-                  Built backend logic for accounting reports (Chart of Accounts,
-                  PDFs, Stripe), integrated with Inventory Management for
-                  consistent reporting, added Chinese translation, and ensured
-                  efficient API communication with the frontend.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>React.js</span>
-                  <span>Node.js</span>
-                  <span>Bootstrap</span>
-                </div>
-              </div>
-            </div>
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/expense.png"
-                  alt="Expense Management System Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="https://expense.seebiz.com"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Expense Management System</h3>
-                <p>
-                  Implemented backend logic including Chart of Accounts and
-                  Stripe integration. Built Trip and Expense modules with admin
-                  approvals and role-based access control, ensuring seamless API
-                  communication with frontend.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>React.js</span>
-                  <span>Node.js</span>
-                  <span>Bootstrap</span>
-                  <span>MySQL</span>
-                </div>
-              </div>
-            </div>
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/admin.png"
-                  alt="Inventory / Books / Expense Admin Panel Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="https://admin-inventory.seebiz.com/"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Inventory / Books / Expense Admin Panel</h3>
-                <p>
-                  Built a custom admin panel to manage users and organizations,
-                  enabling large-scale updates across accounts. Replaced legacy
-                  Chart of Accounts with a flexible, scalable structure tailored
-                  to user needs.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>Node.js</span>
-                  <span>MySQL</span>
-                  <span>React.js</span>
-                  <span>Admin UI</span>
-                  <span>Bootstrap</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/legal.png"
-                  alt="Legal Documents Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectBadge}>Featured</div>
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="#"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) =>
-                      handleLiveDemoClick(e, "Legal Documents", "#")
-                    }
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Legal Documents</h3>
-                <p>
-                  Developed an admin panel for creating document templates and
-                  dynamic questionnaires, along with a user portal where users
-                  can select templates, answer related questions, and generate
-                  customized PDF documents after secure payment. Implemented
-                  backend business logic and collaborated with the frontend team
-                  to ensure smooth data flow and reliable document generation.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>Next.js</span>
-                  <span>Bootstrap</span>
-                  <span>Node.js</span>
-                  <span>MySQL</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.projectCard}>
-              <div className={styles.projectImage}>
-                <img
-                  src="/images/marklab.png"
-                  alt="Marklab Doctors Portal Preview"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div className={styles.projectBadge}>Featured</div>
-                <div className={styles.projectOverlay}>
-                  <a
-                    href="#"
-                    className={styles.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) =>
-                      handleLiveDemoClick(e, "Marklab Doctors Portal", "#")
-                    }
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Live Demo
-                  </a>
-                </div>
-              </div>
-              <div className={styles.projectInfo}>
-                <h3>Marklab Doctors Portal</h3>
-                <p>
-                  Developed a complete Doctor Portal allowing doctors to add
-                  patients and create medical records with prescriptions, test
-                  reports, and treatment plans. Implemented patient access to
-                  reports via patient ID, doctor record management, and secure
-                  role-based access control. Collaborated with the frontend team
-                  to ensure reliable APIs and seamless user experience.
-                </p>
-                <div className={styles.projectTags}>
-                  <span>Next.js</span>
-                  <span>Bootstrap</span>
-                  <span>Node.js</span>
-                  <span>MySQL</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section
-        id="testimonials"
-        className={`${styles.section} ${styles.sectionDark}`}
-      >
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionNumber}>04</span>
-            <h2 className={styles.sectionTitle}>Client Testimonials</h2>
-            <p className={styles.sectionSubtitle}>
-              What clients say about working with me
-            </p>
-          </div>
-          <div className={styles.testimonialsGrid}>
-            <div className={styles.testimonialCard}>
-              <div className={styles.testimonialQuote}>
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--accent)"
-                  strokeWidth="1"
-                >
-                  <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-                  <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
-                </svg>
-              </div>
-              <p className={styles.testimonialText}>
-                "Exceptional work from start to finish. The attention to detail
-                and commitment to quality exceeded our expectations. Highly
-                recommend for any complex web development project."
+        {/* Projects Section */}
+        <section id="projects" className={styles.section}>
+          <div className={styles.sectionContent}>
+            <motion.div
+              className={styles.sectionHeader}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className={styles.sectionNumber}>03</span>
+              <h2 className={styles.sectionTitle}>Featured Projects</h2>
+              <p className={styles.sectionSubtitle}>
+                A selection of projects showcasing my expertise and problem-solving approach
               </p>
-              <div className={styles.testimonialAuthor}>
-                <div className={styles.authorAvatar}>AB</div>
-                <div>
-                  <div className={styles.authorName}>Abdul Basit</div>
-                  <div className={styles.authorRole}>CEO, Sublime Traders</div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.testimonialCard}>
-              <div className={styles.testimonialQuote}>
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--accent)"
-                  strokeWidth="1"
-                >
-                  <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-                  <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
-                </svg>
-              </div>
-              <p className={styles.testimonialText}>
-                "Professional, reliable, and incredibly talented. Delivered our
-                project ahead of schedule with outstanding results. Will
-                definitely work together again on future projects."
-              </p>
-              <div className={styles.testimonialAuthor}>
-                <div className={styles.authorAvatar}>AL</div>
-                <div>
-                  <div className={styles.authorName}>Alexander</div>
-                  <div className={styles.authorRole}>
-                    Founder, Quantic Solutions
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.testimonialCard}>
-              <div className={styles.testimonialQuote}>
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--accent)"
-                  strokeWidth="1"
-                >
-                  <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-                  <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
-                </svg>
-              </div>
-              <p className={styles.testimonialText}>
-                "The technical expertise and creative solutions provided were
-                exactly what we needed. The project was completed with precision
-                and excellent communication throughout the process."
-              </p>
-              <div className={styles.testimonialAuthor}>
-                <div className={styles.authorAvatar}>WA</div>
-                <div>
-                  <div className={styles.authorName}>Waqar Ahmad</div>
-                  <div className={styles.authorRole}>
-                    PO, Alpha Tech Solutions
-                  </div>
-                </div>
-              </div>
+            </motion.div>
+            <div className={styles.projectsGrid}>
+              {projects.map((project, index) => (
+                <ProjectCard3D key={project.title} project={project} index={index} />
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className={`${styles.section} ${styles.sectionDark}`}
-      >
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionNumber}>05</span>
-            <h2 className={styles.sectionTitle}>Get In Touch</h2>
-            <p className={styles.sectionSubtitle}>
-              Let's discuss how I can help bring your vision to life
-            </p>
+        {/* Testimonials Section */}
+        <section id="testimonials" className={`${styles.section} ${styles.sectionDark}`}>
+          <div className={styles.sectionContent}>
+            <motion.div
+              className={styles.sectionHeader}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className={styles.sectionNumber}>04</span>
+              <h2 className={styles.sectionTitle}>Client Testimonials</h2>
+              <p className={styles.sectionSubtitle}>What clients say about working with me</p>
+            </motion.div>
+            <TestimonialCarousel />
           </div>
-          <div className={styles.contactContent}>
-            <div className={styles.contactInfo}>
-              <p>
-                I'm always open to discussing new projects, creative ideas, or
-                opportunities to be part of your visions. Feel free to reach
-                out!
-              </p>
-              <div className={styles.contactMethods}>
-                <a
-                  href="mailto:afzaalhafeez1020@gmail.com"
-                  className={styles.contactItem}
-                >
-                  <div className={styles.contactIconWrapper}>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                      <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                  </div>
-                  <span>afzaalhafeez1020@gmail.com</span>
-                </a>
-                <a href="#" className={styles.contactItem}>
-                  <div className={styles.contactIconWrapper}>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                  </div>
-                  <span>Lahore, Pakistan</span>
-                </a>
-              </div>
-              <div className={styles.socialLinks}>
-                <a
-                  href="https://www.linkedin.com/in/afzaal-hafeez-148299209/"
-                  aria-label="LinkedIn"
-                  className={styles.socialLink}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect x="2" y="9" width="4" height="12" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                  <span>LinkedIn</span>
-                </a>
-              </div>
-            </div>
-            <div className={styles.contactFormWrapper}>
-              <ContactForm />
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerGrid}>
-            <div className={styles.footerSection}>
-              <div className={styles.footerLogo}>
-                <img
-                  src="/images/Muhammad Afzaal.jpg"
-                  alt="Muhammad Afzaal"
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "50%",
-                    marginRight: "10px",
-                  }}
-                />
-                <span>Muhammad Afzaal</span>
-              </div>
-              <p className={styles.footerTagline}>
-                Full Stack Laravel Developer building scalable web solutions
-                with passion and precision.
-              </p>
-            </div>
-            <div className={styles.footerSection}>
-              <h3>Quick Links</h3>
-              <ul>
-                <li>
-                  <a href="#home">Home</a>
-                </li>
-                <li>
-                  <a href="#about">About</a>
-                </li>
-                <li>
-                  <a href="#skills">Skills</a>
-                </li>
-                <li>
-                  <a href="#projects">Projects</a>
-                </li>
-                <li>
-                  <a href="#contact">Contact</a>
-                </li>
-              </ul>
-            </div>
-            <div className={styles.footerSection}>
-              <h3>Contact Info</h3>
-              <ul>
-                <li>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
-                  <a href="mailto:afzaalhafeez1020@gmail.com">
-                    afzaalhafeez1020@gmail.com
+        {/* Contact Section */}
+        <section id="contact" className={styles.section}>
+          <div className={styles.sectionContent}>
+            <motion.div
+              className={styles.sectionHeader}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className={styles.sectionNumber}>05</span>
+              <h2 className={styles.sectionTitle}>Get In Touch</h2>
+              <p className={styles.sectionSubtitle}>Let's discuss how I can help bring your vision to life</p>
+            </motion.div>
+            <div className={styles.contactContent}>
+              <motion.div
+                className={styles.contactInfo}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <p>
+                  I'm always open to discussing new projects, creative ideas, or opportunities to be part of your
+                  visions. Feel free to reach out!
+                </p>
+                <div className={styles.contactMethods}>
+                  <a href="mailto:afzaalhafeez1020@gmail.com" className={styles.contactItem}>
+                    <div className={styles.contactIconWrapper}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                    </div>
+                    <span>afzaalhafeez1020@gmail.com</span>
                   </a>
-                </li>
-                <li>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
+                  <a href="#" className={styles.contactItem}>
+                    <div className={styles.contactIconWrapper}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                    </div>
+                    <span>Lahore, Pakistan</span>
+                  </a>
+                </div>
+                <div className={styles.socialLinks}>
+                  <motion.a
+                    href="https://www.linkedin.com/in/afzaal-hafeez-148299209/"
+                    aria-label="LinkedIn"
+                    className={styles.socialLink}
+                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <span>Lahore, Pakistan</span>
-                </li>
-              </ul>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect x="2" y="9" width="4" height="12" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                    <span>LinkedIn</span>
+                  </motion.a>
+                </div>
+              </motion.div>
+              <motion.div
+                className={styles.contactFormWrapper}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <ContactForm />
+              </motion.div>
             </div>
-            <div className={styles.footerSection}>
-              <h3>Connect</h3>
-              <div className={styles.socialLinks}>
-                <a
-                  href="https://www.linkedin.com/in/afzaal-hafeez-148299209/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect x="2" y="9" width="4" height="12" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                </a>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className={styles.footer}>
+          <div className={styles.footerContent}>
+            <div className={styles.footerGrid}>
+              <div className={styles.footerSection}>
+                <div className={styles.footerLogo}>
+                  <img
+                    src="/images/Muhammad Afzaal.jpg"
+                    alt="Muhammad Afzaal"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      marginRight: "10px",
+                    }}
+                  />
+                  <span>Muhammad Afzaal</span>
+                </div>
+                <p className={styles.footerTagline}>
+                  MERN Stack Developer building scalable web solutions with passion and precision.
+                </p>
+              </div>
+              <div className={styles.footerSection}>
+                <h3>Quick Links</h3>
+                <ul>
+                  {["home", "about", "skills", "projects", "contact"].map((link) => (
+                    <li key={link}>
+                      <a href={`#${link}`}>{link.charAt(0).toUpperCase() + link.slice(1)}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className={styles.footerSection}>
+                <h3>Contact Info</h3>
+                <ul>
+                  <li>
+                    <a href="mailto:afzaalhafeez1020@gmail.com">afzaalhafeez1020@gmail.com</a>
+                  </li>
+                  <li>
+                    <span>Lahore, Pakistan</span>
+                  </li>
+                </ul>
               </div>
             </div>
+            <div className={styles.footerBottom}>
+              <p>&copy; 2025 Muhammad Afzaal. All rights reserved.</p>
+            </div>
           </div>
-          <div className={styles.footerBottom}>
-            <p>&copy; 2025 Muhammad Afzaal. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
 
-      {/* Popup Modal */}
-      {showPopup && (
-        <div
-          className={styles.popupOverlay}
-          onClick={() => setShowPopup(false)}
-        >
-          <div
-            className={styles.popupContent}
-            onClick={(e) => e.stopPropagation()}
+        {/* Popup Modal */}
+        {showPopup && (
+          <motion.div
+            className={styles.popupOverlay}
+            onClick={() => setShowPopup(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <button
-              className={styles.popupClose}
-              onClick={() => setShowPopup(false)}
-              aria-label="Close popup"
+            <motion.div
+              className={styles.popupContent}
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-            <div className={styles.popupIcon}>
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-              </svg>
-            </div>
-            <h3 className={styles.popupTitle}>Site Temporarily Unavailable</h3>
-            <p className={styles.popupMessage}>
-              Due to Development or security maintenance site is down right now
-            </p>
-            <button
-              className={styles.popupButton}
-              onClick={() => setShowPopup(false)}
-            >
-              Understood
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+              <button className={styles.popupClose} onClick={() => setShowPopup(false)} aria-label="Close popup">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+              <div className={styles.popupIcon}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <h3 className={styles.popupTitle}>Site Temporarily Unavailable</h3>
+              <p className={styles.popupMessage}>
+                Due to Development or security maintenance site is down right now
+              </p>
+              <button className={styles.popupButton} onClick={() => setShowPopup(false)}>
+                Understood
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </div>
+    </SmoothScroll>
   );
 }
