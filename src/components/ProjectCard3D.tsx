@@ -1,87 +1,87 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
+import { FiExternalLink } from "react-icons/fi";
+import type { Project } from "@/data/profile";
 import styles from "./ProjectCard3D.module.css";
-
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link?: string;
-  badge?: string;
-}
 
 export default function ProjectCard3D({ project, index }: { project: Project; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
+      viewport={{ once: true, margin: "-40px" }}
     >
       <Tilt
-        tiltMaxAngleX={10}
-        tiltMaxAngleY={10}
+        tiltMaxAngleX={6}
+        tiltMaxAngleY={6}
         perspective={1000}
-        scale={1.05}
-        transitionSpeed={2000}
-        gyroscope={true}
+        scale={1.02}
+        transitionSpeed={1500}
         className={styles.tiltCard}
       >
-        <div className={styles.card}>
+        <article className={styles.card}>
           <div className={styles.imageWrapper}>
-            <img src={project.image} alt={project.title} className={styles.image} />
+            <Image
+              src={project.image}
+              alt={`${project.title} screenshot`}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              className={styles.image}
+            />
             {project.badge && (
               <motion.div
                 className={styles.badge}
                 initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.3, type: "spring" }}
               >
                 {project.badge}
               </motion.div>
             )}
-            <div className={styles.overlay}>
-              {project.link && (
+            {project.link && (
+              <div className={styles.overlay}>
                 <motion.a
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.viewButton}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={`Open ${project.title} live site`}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                  Live Demo
+                  <FiExternalLink size={18} aria-hidden="true" />
+                  Visit live site
                 </motion.a>
-              )}
-            </div>
+              </div>
+            )}
           </div>
           <div className={styles.content}>
+            <p className={styles.meta}>
+              <span className={styles.category}>{project.category}</span>
+              <span className={styles.role}>{project.role}</span>
+            </p>
             <h3 className={styles.title}>{project.title}</h3>
             <p className={styles.description}>{project.description}</p>
-            <div className={styles.tags}>
-              {project.tags.map((tag, i) => (
-                <motion.span
-                  key={tag}
-                  className={styles.tag}
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  viewport={{ once: true }}
-                >
+            <ul className={styles.tags} aria-label="Technologies">
+              {project.tags.map((tag) => (
+                <li key={tag} className={styles.tag}>
                   {tag}
-                </motion.span>
+                </li>
               ))}
-            </div>
+            </ul>
+            {project.link && (
+              <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.textLink}>
+                {project.link.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                <FiExternalLink size={14} aria-hidden="true" />
+              </a>
+            )}
           </div>
-        </div>
+        </article>
       </Tilt>
     </motion.div>
   );

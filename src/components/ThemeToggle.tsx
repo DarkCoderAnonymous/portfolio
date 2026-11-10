@@ -18,7 +18,7 @@ export default function ThemeToggle() {
       <motion.div
         className={styles.toggleTrack}
         animate={{
-          backgroundColor: theme === "dark" ? "#8b5cf6" : "#f3f4f6",
+          backgroundColor: theme === "dark" ? "#e2765c" : "#dcded6",
         }}
       >
         <motion.div

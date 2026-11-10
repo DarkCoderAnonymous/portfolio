@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import styles from "../page.module.css";
-import Link from "next/link";
 
 export default function ContactUs() {
   const [form, setForm] = useState({
@@ -122,16 +121,8 @@ export default function ContactUs() {
     return () => clearTimeout(timer);
   }, [submitted, error]);
 
-  // Theme classes
-  const cardClass = "card bg-dark text-light border-secondary";
-  const cardBodyClass = "card-body bg-dark text-light";
-
   return (
     <>
-      <p>
-        <Link href="mailto:afzaalhafeez1020@gmail.com"></Link>
-      </p>
-
       <form
         className={styles.contactForm}
         style={{ width: "100%" }}
@@ -234,7 +225,7 @@ export default function ContactUs() {
         </button>
         {submitted && (
           <div className="alert alert-success mt-3" role="alert">
-            Thank you for contacting me! I'll get back to you soon.
+            Thank you for contacting me! I&apos;ll get back to you soon.
           </div>
         )}
         {error && (

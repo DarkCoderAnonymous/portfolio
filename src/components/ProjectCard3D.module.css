@@ -6,7 +6,7 @@
 .card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border-radius: 20px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -17,7 +17,7 @@
 
 .card:hover {
   border-color: var(--accent);
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+  box-shadow: var(--shadow-card);
 }
 
 .imageWrapper {
@@ -42,10 +42,10 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--accent);
+  color: var(--accent-contrast);
   padding: 6px 16px;
-  border-radius: 20px;
+  border-radius: var(--radius-md);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -77,8 +77,8 @@
   gap: 8px;
   padding: 12px 24px;
   background: var(--accent);
-  color: white;
-  border-radius: 30px;
+  color: var(--accent-contrast);
+  border-radius: var(--radius-sm);
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
@@ -87,7 +87,7 @@
 
 .viewButton:hover {
   background: var(--accent-hover);
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 10px 30px var(--accent-glow);
 }
 
 .content {
@@ -102,7 +102,7 @@
   font-weight: 700;
   margin-bottom: 12px;
   color: var(--text-primary);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -124,9 +124,9 @@
 
 .tag {
   padding: 6px 14px;
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  border-radius: 15px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
   font-size: 12px;
   color: var(--accent);
   font-weight: 500;
@@ -148,4 +148,178 @@
   .description {
     font-size: 13px;
   }
+}
+
+.tiltCard {
+  height: 100%;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(29, 39, 35, 0.08);
+}
+
+.imageWrapper {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: var(--section-dark-bg);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.badge {
+  top: 12px;
+  right: auto;
+  left: 12px;
+  padding: 6px 10px;
+  border-radius: 2px;
+  background: var(--foreground);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.overlay {
+  top: auto;
+  left: auto;
+  right: 12px;
+  bottom: 12px;
+  width: auto;
+  height: auto;
+  opacity: 1;
+  background: transparent;
+}
+
+.viewButton {
+  padding: 9px 12px;
+  border-radius: 3px;
+  background: var(--foreground);
+  font-size: 12px;
+}
+
+.viewButton:hover {
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.content {
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 8px;
+  background: none;
+  color: var(--foreground);
+  font-size: 19px;
+  -webkit-text-fill-color: currentColor;
+}
+
+.description {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.tags {
+  gap: 6px;
+}
+
+.tag {
+  padding: 5px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  background: var(--section-dark-bg);
+  color: var(--text-primary);
+  font-size: 11px;
+}
+
+/* --- Added: meta line, list tags, text link --- */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.category {
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+[data-theme="dark"] .category {
+  color: #4ade80;
+}
+
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  min-height: 32px;
+}
+
+.textLink:hover {
+  text-decoration: underline;
+}
+
+.overlay {
+  pointer-events: none;
+}
+
+.card:hover .overlay,
+.card:focus-within .overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Editorial overrides --- */
+.title {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--text-primary);
+}
+
+.card {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  backdrop-filter: none;
+}
+
+.card:hover .image {
+  transform: scale(1.04);
+}
+
+.category {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+[data-theme="dark"] .category {
+  color: var(--accent);
 }
