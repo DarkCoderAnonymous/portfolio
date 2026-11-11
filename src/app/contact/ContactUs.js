@@ -27,6 +27,7 @@ export default function ContactUs() {
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
   }, []);
 
+
   // Regex patterns
   const nameRegex = /^[a-zA-Z ._-]+$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -56,6 +57,7 @@ export default function ContactUs() {
     setErrors((prev) => ({ ...prev, [name]: error }));
     return error;
   };
+  // Handle input changes and validate fields on change
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,7 +71,7 @@ export default function ContactUs() {
     setError("");
     setSubmitted(false);
 
-    // Validate all fields
+  
     const nameError = validateField("name", form.name);
     const emailError = validateField("email", form.email);
     const subjectError = validateField("subject", form.subject);
