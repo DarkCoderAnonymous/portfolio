@@ -13,66 +13,149 @@ export const profile = {
   email: "afzaalhafeez1020@gmail.com",
   linkedin: "https://www.linkedin.com/in/muhammad-afzaal-m-anwar-hafeez-148299209/",
   availability: "Open to full-time & freelance work",
-  yearsExperience: "5+",
+  yearsExperience: "7+",
   photo: "/images/Muhammad Afzaal.jpg",
   summary:
-    "Full-stack JavaScript engineer with 5+ years of experience shipping production web applications. I specialise in React and Next.js on the frontend and Node.js, Express and MongoDB on the backend, with a strong focus on performance, accessibility and clean, maintainable code.",
+    "Full-stack JavaScript engineer with 7+ years of experience shipping production web applications. I specialise in React and Next.js on the frontend and Node.js, Express and MongoDB on the backend, with a strong focus on performance, accessibility and clean, maintainable code.",
   about: [
     "I build end-to-end products: from accessible, responsive interfaces in React, Next.js and TypeScript to secure REST APIs, authentication, payments and reporting on the backend.",
     "Most of my recent work has been on business software — inventory, accounting, expense and admin platforms — where I own backend domain logic such as Chart of Accounts, PDF reporting, Stripe billing, role-based access control and multilingual support.",
     "I care about measurable outcomes: faster pages, fewer bugs, clear APIs and features that solve real problems for users and teams.",
   ],
   stats: [
-    { value: "5+", label: "Years of experience" },
-    { value: "10+", label: "Production projects" },
+    { value: "7+", label: "Years of experience" },
+    { value: "15+", label: "Production projects" },
     { value: "10+", label: "Happy clients & teams" },
   ],
 };
 
 export type Experience = {
+  id: string;
   company: string;
   role: string;
-  type: string;
+  employmentType: "Full-time" | "Part-time" | "Freelance" | "Contract";
+  workMode: "On-site" | "Remote" | "Hybrid";
+  startDate: string; // YYYY-MM
+  endDate: string | null; // null = Present
   location: string;
-  period: string; // TODO: verify dates against your LinkedIn profile
   summary: string;
   highlights: string[];
   stack: string[];
+  links?: string[];
 };
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const formatMonth = (ym: string) => {
+  const [y, m] = ym.split("-").map(Number);
+  return `${MONTHS[m - 1]} ${y}`;
+};
+
+export const formatPeriod = (e: Pick<Experience, "startDate" | "endDate">) =>
+  `${formatMonth(e.startDate)} — ${e.endDate ? formatMonth(e.endDate) : "Present"}`;
 
 export const experience: Experience[] = [
   {
-    company: "SeeBiz",
-    role: "MERN Stack Developer",
-    type: "Full-time",
-    location: "Lahore, Pakistan",
-    period: "2021 — Present",
+    id: "turnfeat",
+    company: "Turnfeat.ai",
+    role: "Full-Stack Developer",
+    employmentType: "Part-time",
+    workMode: "Remote",
+    startDate: "2026-06",
+    endDate: null,
+    location: "Los Angeles, USA",
     summary:
-      "Building and maintaining a suite of business SaaS products — Inventory, Books, Expense management and an internal Admin Panel — used by organisations to run their day-to-day operations.",
+      "Part-time remote role on TurnFeat AI, a platform that turns software ideas into structured project plans with AI and matches each module with specialist freelance developers.",
     highlights: [
-      "Designed and implemented accounting backend logic including Chart of Accounts, ledgers and financial reports shared across Inventory and Books.",
-      "Integrated Stripe subscriptions and payments, and built PDF templating for invoices, statements and reports.",
-      "Built Trip and Expense modules with multi-level admin approvals and role-based access control.",
-      "Developed a custom Admin Panel to manage users and organisations and perform large-scale account updates safely.",
-      "Added Chinese localisation (i18n) and worked closely with frontend engineers on API contracts and performance.",
+      "Build client- and freelancer-facing features with React.js, Next.js and TypeScript, including complex multi-step workflows across both modules.",
+      "Develop reusable UI components shared across the platform's dashboards.",
+      "Implement backend features and REST APIs with Node.js, Express.js and MongoDB, and connect them to the frontend.",
+      "Integrate AI-driven workflows (requirement gathering, project breakdown) into the user interface.",
+      "Collaborate asynchronously with a distributed remote team.",
     ],
-    stack: ["React.js", "Next.js", "Node.js", "Express", "MongoDB", "Redux", "Stripe"],
+    stack: ["React.js", "Next.js", "TypeScript", "Node.js", "Express.js", "MongoDB", "REST APIs"],
+    links: ["https://turnfeat.ai"],
   },
   {
-    company: "Freelance & Contract",
-    role: "Full-Stack JavaScript Developer",
-    type: "Remote",
-    location: "Worldwide",
-    period: "2020 — Present",
+    id: "seebiz",
+    company: "SeeBiz PVT LTD",
+    role: "Senior React.js Developer",
+    employmentType: "Full-time",
+    workMode: "On-site",
+    startDate: "2021-10",
+    endDate: null,
+    location: "Lahore, Pakistan",
     summary:
-      "Delivering complete web products for startups and small businesses — from UI design implementation to APIs, databases and deployment.",
+      "Frontend developer on SeeBiz's suite of cloud business applications for wholesale businesses: Inventory, Books (accounting), Expense Management and a shared Admin Panel, plus related client products.",
     highlights: [
-      "Krub.ai — B2B wholesale buying-community platform built with Next.js, Node.js and MongoDB.",
-      "ConvertPK.com — browser-based file conversion platform (PDF, ZIP, Base64, images) built with Next.js and Node.js.",
-      "MarkLab Provider Data Portal — healthcare provider data, invoices and insurance management with attestation workflows.",
-      "Legal document platform — admin dashboard for users, document templates, generated documents and payment history.",
+      "Inventory Management: built React.js interfaces for products and SKUs, stock levels, multi-warehouse and multi-store views, sales and purchase orders, invoices and low-stock alerts.",
+      "Books (cloud accounting): built screens for invoicing, expenses, payments, bank reconciliation, contacts and financial reports (balance sheet, P&L, cash flow).",
+      "Expense & Trip Management: built the Trip and Expense module UIs, approval workflows and role-based views for CEO, HR, Manager and Employee users.",
+      "Admin Panel: built the React.js admin interface for managing users and organizations across all three products, including the new Chart of Accounts interface.",
+      "Qalam QATS: developed React.js dashboard interfaces for Qalam's education platform.",
+      "Legal Documents: built the Next.js frontend for a document-automation platform (template/questionnaire admin panel and user portal that generates customised PDF documents).",
+      "Implemented Chinese localisation (i18n) and Stripe billing screens on the frontend.",
+      "Built reusable components and consistent UI patterns shared across products, and integrated every module with REST APIs in close collaboration with the backend team.",
     ],
-    stack: ["Next.js", "React.js", "TypeScript", "Node.js", "MongoDB", "Bootstrap", "Tailwind CSS"],
+    stack: ["React.js", "Next.js", "JavaScript", "Bootstrap", "REST APIs", "Stripe", "i18n"],
+    links: ["https://inventory.seebiz.com", "https://books.seebiz.com", "https://expense.seebiz.com", "https://qats.qalam.it"],
+  },
+  {
+    id: "helpicon",
+    company: "Helpicon",
+    role: "Web Developer",
+    employmentType: "Freelance",
+    workMode: "Remote",
+    startDate: "2023-11",
+    endDate: "2025-07",
+    location: "Sweden",
+    summary:
+      "International remote engagement with Helpicon, a Sweden-based digital service marketplace that connects individuals and businesses with reliable service providers (\"Helpers\") for everyday tasks. Worked directly with a European client across time zones to deliver the full web platform.",
+    highlights: [
+      "Designed and developed the Helpicon web platform with a modern, responsive user experience using Next.js.",
+      "Built intuitive service discovery across multiple categories, with structured pages for each service offering.",
+      "Implemented clear user journeys for posting tasks and finding suitable Helpers.",
+      "Created landing page sections that communicate the platform's value proposition to the Swedish market.",
+      "Delivered responsive layouts, strong usability and cross-device compatibility, with a consistent visual identity that strengthened the brand's online presence.",
+      "Collaborated remotely with an international stakeholder, handling requirements, feedback and delivery asynchronously.",
+    ],
+    stack: ["Next.js", "React.js", "Redux Toolkit", "Ant Design", "Git", "Responsive Web Design"],
+    links: ["https://helpicon.se"],
+  },
+  {
+    id: "spyresync",
+    company: "SpyreSync",
+    role: "Senior React.js Developer",
+    employmentType: "Full-time",
+    workMode: "On-site",
+    startDate: "2020-11",
+    endDate: "2021-11",
+    location: "Pakistan",
+    summary: "Frontend developer building React.js web applications and admin dashboards for client businesses.",
+    highlights: [
+      "Mooner (on-demand service marketplace, Mooner Pte Ltd): developed the React.js web admin panel used to run the platform, managing customers and service providers (including approvals and verification), service requests, quotes and bookings, payments, commissions and payouts, and the referral program, with reporting dashboards.",
+      "Lanceria: React.js frontend for a freelance marketplace connecting clients with freelancers.",
+      "Built reusable dashboard components and integrated admin screens with REST APIs.",
+    ],
+    stack: ["React.js", "JavaScript", "REST APIs", "Jira"],
+  },
+  {
+    id: "mdsol",
+    company: "MDSol Technologies",
+    role: "React.js Developer",
+    employmentType: "Full-time",
+    workMode: "On-site",
+    startDate: "2019-01",
+    endDate: "2020-12",
+    location: "Lahore, Pakistan",
+    summary: "Built React.js websites and admin dashboards for marketplace products, mainly for clients in France.",
+    highlights: [
+      "Batilinks: developed the React.js dashboard for a French construction and renovation marketplace where companies manage their profiles and customers find contractors and specify projects in detail, from materials to paint and lighting; companies are ranked by ratings.",
+      "iCust Live: React.js frontend for an event-management and coupon-generation platform.",
+      "Lessepsadmi: React.js frontend for a construction platform modelled on Batilinks, with additional features.",
+      "Integrated dashboards with backend APIs and built reusable UI components.",
+    ],
+    stack: ["React.js", "JavaScript", "REST APIs", "Jira"],
   },
 ];
 
@@ -80,8 +163,11 @@ export type Project = {
   title: string;
   category: "Company" | "Client" | "Personal";
   role: string;
+  client?: string;
   description: string;
   image: string;
+  /** "contain" for logos that must not be cropped */
+  imageFit?: "cover" | "contain";
   tags: string[];
   link?: string;
   badge?: string;
@@ -89,86 +175,124 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "ConvertPK",
-    category: "Personal",
-    role: "Full-stack · Design to deployment",
+    title: "TurnFeat AI",
+    category: "Client",
+    role: "Full-Stack Developer",
     description:
-      "Fast, privacy-friendly online file conversion platform. Converts PDFs, ZIPs, Base64, images and more directly in the browser with a smooth, responsive experience.",
-    image: "/images/convertpk.png",
-    tags: ["Next.js", "TypeScript", "Node.js"],
-    link: "https://convertpk.com",
-    badge: "New",
+      "AI-powered project planning and freelance marketplace. Turns rough software ideas into structured plans with modules, priorities and effort estimates, then matches clients with freelancers and handles hiring, messaging, contracts, wallets and payments in one place.",
+    image: "/images/projects/turnfeat.jpg",
+    tags: ["Next.js", "React.js", "TypeScript", "Node.js", "Express", "MongoDB", "AI APIs"],
+    link: "https://turnfeat.ai/",
+    badge: "Featured",
   },
   {
-    title: "Krub.ai",
+    title: "Krub — Wholesale Communities",
     category: "Client",
-    role: "Full-stack developer",
+    role: "Full-Stack Developer",
     description:
-      "B2B platform where businesses join or build wholesale buying communities, share requirements and leverage collective volume to negotiate stronger bargains.",
-    image: "/images/krub.png",
+      "Group-buying platform where businesses join or build wholesale communities, share requirements and use collective volume to negotiate better pricing than they could alone.",
+    image: "/images/projects/krub.jpg",
     tags: ["Next.js", "Node.js", "MongoDB", "Bootstrap"],
     link: "https://krub.ai",
     badge: "Featured",
   },
   {
-    title: "Inventory Management System",
-    category: "Company",
-    role: "Backend & integrations · SeeBiz",
+    title: "Helpicon — Service Marketplace",
+    category: "Client",
+    role: "Frontend Developer",
+    client: "Helpicon, Sweden",
     description:
-      "Inventory and accounting SaaS. Built Chart of Accounts, PDF templating and Stripe payments, added Chinese translation and owned API design with the frontend team.",
-    image: "/images/inventory.png",
-    tags: ["React.js", "Next.js", "Node.js", "Redux"],
-    link: "http://inventory.seebiz.com",
-    badge: "Featured",
+      "Responsive digital service marketplace for a Sweden-based client, covering service discovery, task posting and helper-matching user journeys.",
+    image: "/images/projects/helpicon.jpg",
+    tags: ["Next.js", "React.js", "Responsive UI"],
+    link: "https://helpicon.se",
   },
   {
-    title: "Books Management System",
-    category: "Company",
-    role: "Backend & reporting · SeeBiz",
+    title: "QATS — Qalam Platform",
+    category: "Client",
+    role: "Frontend Developer",
     description:
-      "Accounting product with Chart of Accounts, financial reports, PDF exports and Stripe billing, integrated with Inventory for consistent cross-product reporting.",
-    image: "/images/books.png",
-    tags: ["React.js", "Node.js", "Bootstrap"],
+      "Web-based assessment and analytics platform. Built reusable React components, responsive dashboards with course statistics and quiz performance, structured pages and backend API integration.",
+    image: "/images/projects/qats.jpg",
+    tags: ["React.js", "JavaScript", "REST APIs", "Charts"],
+    link: "https://qats.qalam.it",
+  },
+  {
+    title: "SeeBiz Inventory",
+    category: "Company",
+    role: "Frontend Developer",
+    description:
+      "Enterprise inventory management for wholesale businesses: products and SKUs, multi-warehouse stock, sales and purchase orders, invoicing, analytics, roles and low-stock alerts. Built the data-heavy dashboards and reusable UI.",
+    image: "/images/projects/seebiz-inventory.jpg",
+    tags: ["React.js", "JavaScript", "REST APIs", "Dashboards"],
+    link: "https://inventory.seebiz.com/login",
+  },
+  {
+    title: "SeeBiz Books",
+    category: "Company",
+    role: "Full-Stack Developer",
+    description:
+      "Cloud accounting SaaS covering invoicing, expenses, bank reconciliation, tax, financial reports and multi-currency. Owned accounting report logic, Chart of Accounts, PDF generation and Stripe payments.",
+    image: "/images/projects/seebiz-books.jpg",
+    tags: ["React.js", "Node.js", "Stripe", "PDF Reports"],
     link: "https://books.seebiz.com",
   },
   {
-    title: "Expense Management System",
-    category: "Company",
-    role: "Backend & workflows · SeeBiz",
-    description:
-      "Trip and expense tracking with multi-level admin approvals, role-based access control, Chart of Accounts and Stripe integration.",
-    image: "/images/expense.png",
-    tags: ["React.js", "Node.js", "Bootstrap"],
-    link: "https://expense.seebiz.com",
-  },
-  {
-    title: "Admin Panel",
-    category: "Company",
-    role: "Full-stack · SeeBiz",
-    description:
-      "Internal admin console to manage users and organisations across products, run large-scale account updates and replace the legacy Chart of Accounts with a flexible structure.",
-    image: "/images/admin.png",
-    tags: ["React.js", "Node.js", "Bootstrap"],
-    link: "https://admin-inventory.seebiz.com/",
-  },
-  {
-    title: "MarkLab Provider Data Portal",
+    title: "MarkLab Inc. — Medical Billing Website",
     category: "Client",
-    role: "Full-stack developer",
+    role: "Frontend Developer",
+    client: "MarkLab Inc., USA",
     description:
-      "Healthcare provider data portal for MarkLab Inc. Super-admin dashboard for providers, invoices and insurances with attestation reminders, review history and downloadable state applications.",
-    image: "/images/marklab.png",
-    tags: ["React.js", "Node.js", "RBAC"],
+      "Corporate website for a US medical billing and Revenue Cycle Management company: service pages, specialty directory, testimonials, healthcare blog and lead-generation forms, all fully responsive.",
+    image: "/images/projects/marklab.png",
+    imageFit: "contain",
+    tags: ["React.js", "JavaScript", "Responsive UI", "SEO"],
+    link: "https://marklabinc.com/",
   },
   {
-    title: "Legal Document Platform",
-    category: "Client",
-    role: "Full-stack developer",
+    title: "SeeBiz Expense",
+    category: "Company",
+    role: "Backend Developer",
     description:
-      "Admin platform for a legal-tech product: user management, document templates, generated documents and payment history with live usage dashboards.",
-    image: "/images/legal.png",
-    tags: ["Next.js", "Node.js", "MongoDB", "Payments"],
+      "Expense management platform. Built backend logic including Chart of Accounts and Stripe integration, plus Trip and Expense modules with admin approvals and role-based access control.",
+    image: "/images/projects/expense.jpg",
+    tags: ["Node.js", "Express", "Stripe", "RBAC"],
+    link: "https://expense.seebiz.com/login",
   },
+  {
+    title: "Mooner — Admin Panel",
+    category: "Client",
+    role: "Frontend Developer",
+    description:
+      "Web admin panel for Mooner, an on-demand service marketplace. Dashboards for users, providers, service categories and bookings with data tables, forms, filters and REST API integration.",
+    image: "/images/projects/mooner.png",
+    imageFit: "contain",
+    tags: ["React.js", "JavaScript", "REST APIs", "Admin Dashboard"],
+    link: "https://play.google.com/store/apps/details?id=com.app.mooner&hl=en",
+  },
+  {
+    title: "BATILINKS — Dealer Management Dashboard",
+    category: "Client",
+    role: "Frontend Developer",
+    client: "BATILINKS, Algeria",
+    description:
+      "Centralised admin dashboard for an industrial equipment and intralogistics dealer: inventory and work-order tables, management forms, admin workflows and backend API integration.",
+    image: "/images/projects/batilinks.jpg",
+    tags: ["React.js", "JavaScript", "REST APIs", "Admin Dashboard"],
+    link: "https://meijer-handling-solutions.com/",
+  },
+];
+
+export type CoreSkill = { name: string; note: string };
+
+/** Shown as large tiles at the top of the Skills section. */
+export const coreStack: CoreSkill[] = [
+  { name: "React.js", note: "Primary UI library since 2019" },
+  { name: "Next.js", note: "App Router, SSR, SEO-ready sites" },
+  { name: "TypeScript", note: "Typed, maintainable codebases" },
+  { name: "Node.js", note: "APIs, auth and business logic" },
+  { name: "Express.js", note: "REST API design and middleware" },
+  { name: "MongoDB", note: "Schema design with Mongoose" },
 ];
 
 export type SkillGroup = {

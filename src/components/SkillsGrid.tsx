@@ -27,14 +27,14 @@ import {
   SiDocker,
   SiVercel,
 } from "react-icons/si";
-import { skillGroups } from "@/data/profile";
+import { coreStack, skillGroups } from "@/data/profile";
 import styles from "./SkillsGrid.module.css";
 
 const groupIcons: Record<string, ReactNode> = {
-  frontend: <FiCode size={22} />,
-  backend: <FiServer size={22} />,
-  tools: <FiTool size={22} />,
-  practices: <FiLayers size={22} />,
+  frontend: <FiCode size={20} />,
+  backend: <FiServer size={20} />,
+  tools: <FiTool size={20} />,
+  practices: <FiLayers size={20} />,
 };
 
 const skillIcons: Record<string, ReactNode> = {
@@ -54,6 +54,7 @@ const skillIcons: Record<string, ReactNode> = {
   "Express.js": <SiExpress />,
   GraphQL: <SiGraphql />,
   "MongoDB / Mongoose": <SiMongodb />,
+  MongoDB: <SiMongodb />,
   "JWT Authentication": <SiJsonwebtokens />,
   "Stripe Payments": <SiStripe />,
   Git: <SiGit />,
@@ -63,43 +64,76 @@ const skillIcons: Record<string, ReactNode> = {
   Vercel: <SiVercel />,
 };
 
+const reveal = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.45, delay },
+  viewport: { once: true, margin: "-40px" },
+});
+
 export default function SkillsGrid() {
   return (
-    <div className={styles.grid}>
-      {skillGroups.map((group, index) => (
-        <motion.section
-          key={group.key}
-          className={styles.card}
-          aria-labelledby={`skills-${group.key}`}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          viewport={{ once: true, margin: "-40px" }}
-        >
-          <header className={styles.header}>
-            <span className={styles.groupIcon} aria-hidden="true">
-              {groupIcons[group.key]}
-            </span>
-            <div>
-              <h3 id={`skills-${group.key}`} className={styles.title}>
-                {group.title}
-              </h3>
-              <p className={styles.blurb}>{group.blurb}</p>
-            </div>
-          </header>
+    <div className={styles.wrapper}>
+      {/* Core stack */}
+      <section aria-labelledby="core-stack-heading" className={styles.coreSection}>
+        <h3 id="core-stack-heading" className={styles.subheading}>
+          Core stack
+        </h3>
+        <ul className={styles.coreGrid}>
+          {coreStack.map((skill, index) => (
+            <motion.li key={skill.name} className={styles.coreTile} {...reveal(index * 0.06)}>
+              <span className={styles.coreIcon} aria-hidden="true">
+                {skillIcons[skill.name] ?? <FiCheckCircle />}
+              </span>
+              <span className={styles.coreName}>{skill.name}</span>
+              <span className={styles.coreNote}>{skill.note}</span>
+            </motion.li>
+          ))}
+        </ul>
+      </section>
 
-          <ul className={styles.chips}>
-            {group.skills.map((skill) => (
-              <li key={skill} className={styles.chip}>
-                <span className={styles.chipIcon} aria-hidden="true">
-                  {skillIcons[skill] ?? <FiCheckCircle />}
+      {/* Full toolkit by category */}
+      <section aria-labelledby="toolkit-heading">
+        <h3 id="toolkit-heading" className={styles.subheading}>
+          Full toolkit
+        </h3>
+        <div className={styles.grid}>
+          {skillGroups.map((group, index) => (
+            <motion.article
+              key={group.key}
+              className={styles.card}
+              aria-labelledby={`skills-${group.key}`}
+              {...reveal(index * 0.08)}
+            >
+              <header className={styles.header}>
+                <span className={styles.groupIcon} aria-hidden="true">
+                  {groupIcons[group.key]}
                 </span>
-                {skill}
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-      ))}
+                <div>
+                  <h4 id={`skills-${group.key}`} className={styles.title}>
+                    {group.title}
+                  </h4>
+                  <p className={styles.blurb}>{group.blurb}</p>
+                </div>
+                <span className={styles.count} aria-label={`${group.skills.length} skills`}>
+                  {group.skills.length}
+                </span>
+              </header>
+
+              <ul className={styles.chips}>
+                {group.skills.map((skill) => (
+                  <li key={skill} className={styles.chip}>
+                    <span className={styles.chipIcon} aria-hidden="true">
+                      {skillIcons[skill] ?? <FiCheckCircle />}
+                    </span>
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

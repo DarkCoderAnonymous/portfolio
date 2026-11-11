@@ -15,9 +15,16 @@ export default function ContactUs() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Initialize EmailJS on component mount
+  // EmailJS configuration (dashboard: https://dashboard.emailjs.com/admin)
+  // Service ID comes from Email Services. Override without a code change by setting
+  // NEXT_PUBLIC_EMAILJS_SERVICE_ID in .env.local or in Vercel's environment variables.
+  const EMAILJS_SERVICE_ID = "service_hmagck2";
+  const EMAILJS_TEMPLATE_ID = "template_4pdcyuy"; // "One-Time Password" template: {{name}} {{email}} {{subject}} {{message}}
+  const EMAILJS_PUBLIC_KEY = "pRzu3QeZX_DQLZcch";
+  const OWNER_EMAIL = "afzaalhafeez1020@gmail.com";
+
   useEffect(() => {
-    emailjs.init("6_vKg1XbaYvRELYgv");
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
   }, []);
 
   // Regex patterns
@@ -85,38 +92,46 @@ export default function ContactUs() {
     // EmailJS send
     emailjs
       .send(
-        "service_47qar1c",
-        "template_4pdcyuy",
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
         {
+          // The template's "To Email" field is {{email}}, so this must be the owner's
+          // address or the message would go to the visitor instead.
           name: form.name,
-          email: form.email,
-          reply_to: form.email, // for Reply-To
-          subject: form.subject,
-          message: form.message,
+          email: OWNER_EMAIL,
+          reply_to: form.email,
+          subject: `Portfolio contact: ${form.subject}`,
+          message: `From: ${form.name} <${form.email}>\n\n${form.message}`,
         },
-        "pRzu3QeZX_DQLZcch"
+        { publicKey: EMAILJS_PUBLIC_KEY }
       )
       .then(() => {
         setSubmitted(true);
         setForm({ name: "", email: "", subject: "", message: "" });
         setErrors({});
       })
-      .catch(() => {
-        setError("Failed to send message. Please try again later.");
+      .catch((err) => {
+        const detail = err?.text || err?.message || "";
+        console.error("EmailJS send failed:", err);
+        setError(
+          detail
+            ? `Message could not be sent (${detail}). Please email me directly instead.`
+            : "Message could not be sent. Please email me directly instead."
+        );
       })
       .finally(() => {
         setIsSubmitting(false);
       });
   };
 
-  // Hide notifications after 3 seconds
+  // Hide notifications after a few seconds (errors stay longer so they can be read)
   useEffect(() => {
     let timer;
     if (submitted || error) {
       timer = setTimeout(() => {
         setSubmitted(false);
         setError("");
-      }, 3000);
+      }, error ? 8000 : 4000);
     }
     return () => clearTimeout(timer);
   }, [submitted, error]);

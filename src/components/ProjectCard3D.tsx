@@ -24,10 +24,10 @@ export default function ProjectCard3D({ project, index }: { project: Project; in
         className={styles.tiltCard}
       >
         <article className={styles.card}>
-          <div className={styles.imageWrapper}>
+          <div className={`${styles.imageWrapper} ${project.imageFit === "contain" ? styles.imageContain : ""}`}>
             <Image
               src={project.image}
-              alt={`${project.title} screenshot`}
+              alt={`${project.title} ${project.imageFit === "contain" ? "logo" : "screenshot"}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
               className={styles.image}
@@ -43,27 +43,12 @@ export default function ProjectCard3D({ project, index }: { project: Project; in
                 {project.badge}
               </motion.div>
             )}
-            {project.link && (
-              <div className={styles.overlay}>
-                <motion.a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.viewButton}
-                  whileHover={{ scale: 1.06 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label={`Open ${project.title} live site`}
-                >
-                  <FiExternalLink size={18} aria-hidden="true" />
-                  Visit live site
-                </motion.a>
-              </div>
-            )}
           </div>
           <div className={styles.content}>
             <p className={styles.meta}>
               <span className={styles.category}>{project.category}</span>
               <span className={styles.role}>{project.role}</span>
+              {project.client && <span className={styles.client}>· {project.client}</span>}
             </p>
             <h3 className={styles.title}>{project.title}</h3>
             <p className={styles.description}>{project.description}</p>
@@ -75,8 +60,14 @@ export default function ProjectCard3D({ project, index }: { project: Project; in
               ))}
             </ul>
             {project.link && (
-              <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.textLink}>
-                {project.link.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.textLink}
+                aria-label={`Visit ${project.title} live site`}
+              >
+                {new URL(project.link).hostname.replace(/^www\./, "")}
                 <FiExternalLink size={14} aria-hidden="true" />
               </a>
             )}

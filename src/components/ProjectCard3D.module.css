@@ -323,3 +323,22 @@
 [data-theme="dark"] .category {
   color: var(--accent);
 }
+
+/* --- Logo-style images: show whole image, never crop --- */
+.imageContain {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.imageContain .image {
+  object-fit: contain;
+  padding: 12%;
+}
+
+.card:hover .imageContain .image {
+  transform: scale(1.02);
+}
+
+.client {
+  color: var(--text-secondary);
+}
